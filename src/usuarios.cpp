@@ -40,13 +40,26 @@ void cadastrarUsuario(MYSQL *conexao, char *query)
     cin >> foto;
     cin.clear();
 
-    strcpy(query, ("INSERT INTO usuarios (id, nome, telefone, email, cidade, estado, foto) VALUES (uuid_to_bin(uuid()), '"+  nome + "','" + telefone + "','" + email +"','" + cidade +"','" + estado +"','" + foto +"')").c_str());
+    strcpy(query, ("INSERT INTO usuarios (nome, telefone, email, cidade, estado, foto) VALUES ('"+  nome + "','" + telefone + "','" + email +"','" + cidade +"','" + estado +"','" + foto +"')").c_str());
 
     if (mysql_query(conexao, query) != 0)
     {
         system("clear");
         cout << "Oops.. não consegui cadastrar seu contato.\n\n";
     }
+    //selse system("clear");
+    strcpy(query, ("select id from usuarios where email = '" + email + "'").c_str());
+        mysql_query(conexao, query);
+        MYSQL_RES *resultado = mysql_store_result(conexao);
+        // int n_col = mysql_num_fields(resultado);
+        MYSQL_ROW linha; // colunas
+        
+        linha = mysql_fetch_row(resultado);
+        string senha;
+        cout<<"Digite uma senha: ";
+        cin>>senha;
 
-    else system("clear");
+    strcpy(query, ("insert into credenciais(senha,id) values ('" + senha + "'," + linha[0] + ")").c_str());
+    mysql_query(conexao, query);
+    cout<<"Casdastro concluído.\n\n";
 }
