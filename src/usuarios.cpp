@@ -47,8 +47,10 @@ void cadastrarUsuario(MYSQL *conexao, char *query)
         system("clear");
         cout << "Oops.. não consegui cadastrar seu contato.\n\n";
     }
-    //selse system("clear");
-    strcpy(query, ("select id from usuarios where email = '" + email + "'").c_str());
+
+    else 
+    {
+        strcpy(query, ("select id from usuarios where email = '" + email + "'").c_str());
         mysql_query(conexao, query);
         MYSQL_RES *resultado = mysql_store_result(conexao);
         // int n_col = mysql_num_fields(resultado);
@@ -59,7 +61,10 @@ void cadastrarUsuario(MYSQL *conexao, char *query)
         cout<<"Digite uma senha: ";
         cin>>senha;
 
-    strcpy(query, ("insert into credenciais(senha,id) values ('" + senha + "'," + linha[0] + ")").c_str());
-    mysql_query(conexao, query);
-    cout<<"Casdastro concluído.\n\n";
+        strcpy(query, ("insert into credenciais(senha,id) values ('" + senha + "'," + linha[0] + ")").c_str());
+        mysql_query(conexao, query);
+
+        system("clear");
+        cout<<"Usuario cadastrado.\n\n";
+    }
 }
