@@ -31,6 +31,7 @@ int main()
 
     int opcao;
     char query[1024];
+    bool logged = false;
     
     do
     {
@@ -58,53 +59,100 @@ int main()
         {
             system("clear");
             // dados do usuario logado
-            usuario_id = "1";
-            do
-            {
-                cout << "-----------LOGADO-----------\n\n";
-                cout << "[1] Pesquisar receita por nome\n";
-                cout << "[2] Pesquisar receia por ingrediente\n";
-                cout << "[3] Cadastrar receita\n";
-                cout << "[4] Receitas salvas\n";
-                cout << "[5] Logout\n";
-                cout << ">>> ";
-                cin >> opcao;
+            string emailUser;
+            string senhaUser;
+
+            cout << "Informe o email: " << endl;
+            cin >> emailUser;
+            cin.clear();
+
+            strcpy(query, ("SELECT id FROM usuarios where email = '"+ emailUser +"'").c_str());
+    
+            if(mysql_query(conexao, query) != 0)
+                cout<< "Erro na conexão!" << endl;
+            MYSQL_RES *resultado = mysql_store_result(conexao);
+            if(mysql_num_rows(resultado) == 0){
+                cout<< "Email não cadastrado!" << endl;
+                
+            }else{
+                MYSQL_ROW id;
+                    
+                id = mysql_fetch_row(resultado); 
+
+                cout << "Informe a senha: " << endl;
+                cin >> senhaUser;
                 cin.clear();
 
-                if (opcao == 1) // pesquisar receita por nome
-                {
-                    pesquisarReceitaPorNome(conexao, query, usuario_id);
-                }
 
-                else if(opcao == 2) // pesquisar receita por ingrediente
+                strcpy(query , ("select senha from credenciais where id = "+ to_string(atoi(id[0])) +"").c_str());
+                if(mysql_query(conexao, query) != 0)
+                    cout<< "Erro na conexão!" << endl;
+                MYSQL_RES *resultado1 = mysql_store_result(conexao);
+                if(mysql_num_rows(resultado1) == 0){
+                    cout<< "Senha não encontrada!" << endl;
+                }else{
+                    MYSQL_ROW senha;
+                        
+                    senha = mysql_fetch_row(resultado1);
+
+                    if(senhaUser == senha[0]){
+                        logged = true;
+                        cout << "Usuário logado com sucesso!" << endl;
+                    }else{
+                        cout << "Erro ao logar, por favor confira suas informações!"<< endl;
+                    }
+                }
+            }
+            usuario_id = to_string(id[0]);
+            
+            if(logged == true){
+                do
                 {
+                    cout << "-----------LOGADO-----------\n\n";
+                    cout << "[1] Pesquisar receita por nome\n";
+                    cout << "[2] Pesquisar receia por ingrediente\n";
+                    cout << "[3] Cadastrar receita\n";
+                    cout << "[4] Receitas salvas\n";
+                    cout << "[5] Logout\n";
+                    cout << ">>> ";
+                    cin >> opcao;
+                    cin.clear();
+
+                    if (opcao == 1) // pesquisar receita por nome
+                    {
+                        pesquisarReceitaPorNome(conexao, query, usuario_id);
+                    }
+
+                    else if(opcao == 2) // pesquisar receita por ingrediente
+                    {
                     
-                }
+                    }
 
-                else if(opcao == 3) // cadastrar receita
-                {
-                    cadastrarReceita(conexao, query, usuario_id);
-                }
+                    else if(opcao == 3) // cadastrar receita
+                    {
+                        cadastrarReceita(conexao, query, usuario_id);
+                    }
 
-                else if(opcao == 4) // receitas salvas
-                {
+                    else if(opcao == 4) // receitas salvas
+                    {
                     
-                }
+                    }
 
-                else if(opcao == 5) // logout
-                {
-                    opcao = 5;
-                    usuario_id = " ";
-                    system("clear");
-                }
+                    else if(opcao == 5) // logout
+                    {
+                        logged = false;
+                        opcao = 5;
+                        usuario_id = " ";
+                        system("clear");
+                    }
         
-                else
-                {
+                    else
+                    {
                     cout << "\nOpção inválida!!!\n\n";
-                }
+                    }
 
-            } while (opcao != 5);
-
+                } while (opcao != 5);
+            }
         }
 
         if(opcao == 4) // cadastrar usuario
