@@ -12,6 +12,7 @@ int main()
 {
     system("clear");
     // cout << "%s\n", mysql_get_client_info());
+    string usuario_id = " ";
 
     MYSQL *conexao = mysql_init(NULL);
     if (conexao == NULL)
@@ -35,7 +36,7 @@ int main()
     {
         cout << "-----------NAO LOGADO-----------\n\n";
         cout << "[1] Pesquisar receita por nome\n";
-        cout << "[2] Pesquisar receia por ingrediente\n";
+        cout << "[2] Pesquisar receita por ingrediente\n";
         cout << "[3] Logar\n";
         cout << "[4] Cadastrar usuário\n";
         cout << "[0] Sair\n";
@@ -45,7 +46,7 @@ int main()
 
         if(opcao == 1) // pesquisar receita por nome
         {
-            pesquisarReceitaPorNome(conexao, query);
+            pesquisarReceitaPorNome(conexao, query, usuario_id);
         }
 
         if(opcao == 2) // pesquisar receita por ingrediente
@@ -55,8 +56,9 @@ int main()
 
         if(opcao == 3) // logar
         {
+            system("clear");
             // dados do usuario logado
-
+            usuario_id = "1";
             do
             {
                 cout << "-----------LOGADO-----------\n\n";
@@ -71,7 +73,7 @@ int main()
 
                 if (opcao == 1) // pesquisar receita por nome
                 {
-                    pesquisarReceitaPorNome(conexao, query);
+                    pesquisarReceitaPorNome(conexao, query, usuario_id);
                 }
 
                 else if(opcao == 2) // pesquisar receita por ingrediente
@@ -81,7 +83,7 @@ int main()
 
                 else if(opcao == 3) // cadastrar receita
                 {
-                    cadastrarReceita(conexao, query);
+                    cadastrarReceita(conexao, query, usuario_id);
                 }
 
                 else if(opcao == 4) // receitas salvas
@@ -92,6 +94,8 @@ int main()
                 else if(opcao == 5) // logout
                 {
                     opcao = 5;
+                    usuario_id = " ";
+                    system("clear");
                 }
         
                 else
