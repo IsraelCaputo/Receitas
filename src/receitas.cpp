@@ -209,7 +209,6 @@ void exibirComentariosReceita(MYSQL *conexao, char *query, string receita_id)
     mysql_query(conexao, query);
     MYSQL_RES *resultado = mysql_store_result(conexao);
     MYSQL_ROW linha; // colunas
-    linha = mysql_fetch_row(resultado);
     
     cout << "\n\n-------COMENTARIOS-------\n";
     while((linha = mysql_fetch_row(resultado))) 
