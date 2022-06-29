@@ -77,7 +77,8 @@ int main()
             }else{
                 MYSQL_ROW id;
                     
-                id = mysql_fetch_row(resultado); 
+                id = mysql_fetch_row(resultado);
+                usuario_id = id[0];
 
                 cout << "Informe a senha: " << endl;
                 cin >> senhaUser;
@@ -103,7 +104,6 @@ int main()
                     }
                 }
             }
-            usuario_id = to_string(id[0]);
             
             if(logged == true){
                 do
