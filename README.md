@@ -1,14 +1,14 @@
 # Receitas
 Trabalho final realizado para a disciplina de Banco de Dados 1.
 
-## Dependencias
+## Dependências
 Bibliotecas:
 ```
 sudo apt isntall libssl-dev
 sudo apt install libmysqlclient-dev
 ```
 Banco de dados: \
-Sao necessarios alguns passos apos instalar as bibliotecas: \
+São necessários alguns passos após instalar as bibliotecas: \
 Criando o user aluno:
 ```
 sudo mysql
