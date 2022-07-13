@@ -8,7 +8,7 @@ sudo apt isntall libssl-dev
 sudo apt install libmysqlclient-dev
 ```
 Banco de dados: \
-Sao necessarios alguns passos antes de executar o programa, apos instalar as bibliotecas:
+Sao necessarios alguns passos apos instalar as bibliotecas: \
 Criando o user aluno:
 ```
 sudo mysql
