@@ -1,5 +1,5 @@
 #include "login.hpp"
-
+#include "hash.hpp"
 
 string efetuarLogin(MYSQL *conexao, char* query){    
     string usuario_id;
@@ -14,6 +14,10 @@ string efetuarLogin(MYSQL *conexao, char* query){
     cin >> senhaUser;
     cin.clear();
 
+    for(int i = 0; i < 4; i++){
+        senhaUser = sha256(senhaUser);
+    }
+    
     strcpy(query, ("SELECT id, nome FROM usuarios where email = '"+ emailUser +"'").c_str());
     
     if(mysql_query(conexao, query) != 0)
@@ -35,7 +39,7 @@ string efetuarLogin(MYSQL *conexao, char* query){
         usuario_id = linha[0];
         string usuario_nome = linha[1];
 
-        strcpy(query , ("select senha from credenciais where id = "+ to_string(atoi(linha[0])) +" AND senha = " + senhaUser +"").c_str());
+        strcpy(query , ("select senha from credenciais where id = "+ to_string(atoi(linha[0])) +" AND senha = '" + senhaUser +"'").c_str());
         
         if(mysql_query(conexao, query) != 0)
             cout<< "Erro na conexão!" << endl;

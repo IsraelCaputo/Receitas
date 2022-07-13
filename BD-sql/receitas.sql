@@ -14,7 +14,7 @@ create table usuarios(
 
 create table credenciais(
 	id INT primary key,
-	senha int not null,
+	senha varchar(256) not null,
 	foreign key (id) references usuarios(id)
 );
 
@@ -56,7 +56,7 @@ create table receitas_passos (
 	receita_id int,
 	etapa_numero int not null,
 	sequencia int not null,
-	instrucao varchar(128) not null,
+	instrucao varchar(256) not null,
 	primary key (receita_id, etapa_numero, sequencia),
 	foreign key (receita_id, etapa_numero) references receitas_etapas (receita_id, numero)
 );

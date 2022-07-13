@@ -1,5 +1,5 @@
 CXX	    := -g++ 
-LMYS := -lmysqlclient
+LMYS := -lmysqlclient -lcrypto
 CXXFLAGS:= -pedantic-errors -Wall -Wextra -Werror
 LDFLAGS	:= -lstdc++ -lm
 BUILD	:= ./build

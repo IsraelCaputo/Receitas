@@ -1,10 +1,4 @@
 #include "usuarios.hpp"
-#include <iostream>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
-using namespace std;
 
 void cadastrarUsuario(MYSQL *conexao, char *query)
 {
@@ -60,6 +54,10 @@ void cadastrarUsuario(MYSQL *conexao, char *query)
         string senha;
         cout<<"Digite uma senha: ";
         cin>>senha;
+        
+        for(int i = 0; i < 4; i++){
+            senha = sha256(senha);
+        }
 
         strcpy(query, ("insert into credenciais(senha,id) values ('" + senha + "'," + linha[0] + ")").c_str());
         mysql_query(conexao, query);
