@@ -1,11 +1,11 @@
 use cefet_receitas;
 
-insert into usuarios(nome, telefone, email, cidade, estado, foto) values
-	("Admin", "988332244", "admin@admin", "Divinopolis", "MG", "fotos.txt")
+insert into usuarios(nome, telefone, email, cidade, estado) values
+	("Admin", "988332244", "admin@admin", "Divinopolis", "MG")
     ;
 
 insert into credenciais(id, senha) values
-	(1, 123456)
+	(1, "34309d9fb29fef1af3f87cff7d29ee6723be339554b709d0f190563edeea4229")
     ;
 
 insert into receitas(usuario_id, nome, tempo, rendimento, info) values

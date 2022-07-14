@@ -8,8 +8,8 @@ create table usuarios(
 	telefone char(11) not null unique,
 	email varchar(128) not null unique,
 	cidade varchar(64) not null,
-	estado char(2) not null,
-	foto varchar(128) not null
+	estado char(2) not null
+	-- foto varchar(128) not null
 );
 
 create table credenciais(
