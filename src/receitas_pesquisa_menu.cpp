@@ -6,7 +6,7 @@ void imprimeReceita(MYSQL *conexao, char *query, vector <string> receitas_id, un
     mysql_query(conexao, query);
     MYSQL_RES *resultado = mysql_store_result(conexao);
     MYSQL_ROW linha = mysql_fetch_row(resultado);
-    cout << "\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+    cout << "\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
     cout << "\nReceita: " << linha[2];
     cout << " | Rendimento: " << linha[3];
     cout << " | Tempo: " << linha[4];
@@ -15,16 +15,39 @@ void imprimeReceita(MYSQL *conexao, char *query, vector <string> receitas_id, un
     strcpy(query, ("SELECT * FROM ingredientes where receita_id = '" + receitas_id.at(opcao-1) + "'").c_str());
     mysql_query(conexao, query);
     resultado = mysql_store_result(conexao);
-    MYSQL_ROW ingredientes;
     // int n_col = mysql_num_fields(resultado);
 
-    cout << "Ingrediente - Quantidade - Unidade";
-    while ((ingredientes = mysql_fetch_row(resultado)))
+    cout << "INGREDIENTE - QUANTIDADE - UNIDADE";
+    while ((linha = mysql_fetch_row(resultado)))
     {
-        cout << "\n" << ingredientes[1];
-        cout << " - " << ingredientes[2];
-        cout << " - " << ingredientes[3];
+        cout << "\n" << linha[1];
+        cout << " - " << linha[2];
+        cout << " - " << linha[3];
     }
+
+    strcpy(query, ("SELECT * FROM receitas_etapas where receita_id = '" + receitas_id.at(opcao-1) + "'").c_str());
+    mysql_query(conexao, query);
+    resultado = mysql_store_result(conexao);
+
+    cout << "\n\nMODO DE PREPARO:";
+    while ((linha = mysql_fetch_row(resultado)))
+    {
+        cout << "\n" << linha[1];
+        cout << ". " << linha[2];
+
+        strcpy(query, ("SELECT * FROM receitas_passos where receita_id = '" + receitas_id.at(opcao-1) + "' AND etapa_numero = " + linha[1]).c_str());
+        mysql_query(conexao, query);
+        MYSQL_RES *resultado2 = mysql_store_result(conexao);
+        MYSQL_ROW linha2;
+
+        while ((linha2 = mysql_fetch_row(resultado2)))
+        {
+            cout << "\n\t" << linha2[2];
+            cout << ". " << linha2[3];
+        }
+        cout << endl;
+    }
+
 
     mysql_free_result(resultado);
 }
@@ -178,7 +201,7 @@ void curtirReceita(MYSQL *conexao, char *query, string receita_id, string usuari
 {
     string entrada;
     int aval = -1;
-    cout << "\nAvalie a receita entre 0 e 5 estrelas.\n>>";
+    cout << "\nAvalie a receita entre 0 e 5 estrelas.\n>>> ";
     cin >> entrada;
 
     try

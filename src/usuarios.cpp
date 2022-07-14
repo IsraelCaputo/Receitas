@@ -29,12 +29,12 @@ void cadastrarUsuario(MYSQL *conexao, char *query)
     cin >> estado;
     cin.clear();
 
-    cout << "Foto: ";
-    string foto;
-    cin >> foto;
-    cin.clear();
+    // cout << "Foto: ";
+    // string foto;
+    // cin >> foto;
+    // cin.clear();
 
-    strcpy(query, ("INSERT INTO usuarios (nome, telefone, email, cidade, estado, foto) VALUES ('"+  nome + "','" + telefone + "','" + email +"','" + cidade +"','" + estado +"','" + foto +"')").c_str());
+    strcpy(query, ("INSERT INTO usuarios (nome, telefone, email, cidade, estado) VALUES ('"+  nome + "','" + telefone + "','" + email +"','" + cidade +"','" + estado +"')").c_str());
 
     if (mysql_query(conexao, query) != 0)
     {

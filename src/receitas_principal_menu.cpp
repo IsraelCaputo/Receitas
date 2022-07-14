@@ -161,8 +161,7 @@ void cadastrarReceita(MYSQL *conexao, char *query, string usuario_id)
         cout << "Quantidade: ";
         float quantidade;
         cin >> quantidade;
-        while (getchar() != '\n')
-            ;
+        while (getchar() != '\n');
 
         cout << "Unidade: ";
         string unidade;
@@ -179,8 +178,7 @@ void cadastrarReceita(MYSQL *conexao, char *query, string usuario_id)
     cout << "\nNúmero de etapas: ";
     int num_etapas;
     cin >> num_etapas;
-    while (getchar() != '\n')
-        ;
+    while (getchar() != '\n');
     int etapa = 1;
 
     while (num_etapas--)
@@ -196,8 +194,7 @@ void cadastrarReceita(MYSQL *conexao, char *query, string usuario_id)
         cout << "\nNúmero de passos da etapa " << etapa << ": ";
         int num_passos;
         cin >> num_passos;
-        while (getchar() != '\n')
-            ;
+        while (getchar() != '\n');
 
         for (int sequencia = 1; sequencia <= num_passos; sequencia++)
         {
@@ -210,6 +207,25 @@ void cadastrarReceita(MYSQL *conexao, char *query, string usuario_id)
             mysql_query(conexao, query);
         }
         etapa++;
+    }
+
+    // upload imagem receita
+
+    cout << "\nDeseja realizar upload da imagem da receita? (y/n) ";
+    char resposta;
+    cin >> resposta;
+    cin.ignore();
+
+    if(resposta == 'y')
+    {
+        cout << "\nEntre o nome do arquivo: ";
+        string nome_imagem;
+        getline(cin, nome_imagem);
+        cin.clear();
+        
+        string foto_diretorio = "mv uploaded\\ fotos/" + nome_imagem + ".jpg fotos/" + receita_id + ".jpg";
+        const char* save_image = foto_diretorio.c_str();
+        system(save_image);
     }
 
     mysql_free_result(resultado);
