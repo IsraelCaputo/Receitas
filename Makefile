@@ -1,6 +1,6 @@
 CXX	    := -g++ 
 LMYS := -lmysqlclient -lcrypto
-CXXFLAGS:= -pedantic-errors -Wall -Wextra -Werror
+CXXFLAGS:= -pedantic-errors -Wall -Wextra
 LDFLAGS	:= -lstdc++ -lm
 BUILD	:= ./build
 OBJ_DIR := $(BUILD)/objects
